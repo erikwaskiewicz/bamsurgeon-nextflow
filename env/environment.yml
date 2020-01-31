@@ -1,0 +1,6 @@
+name: bamsurgeon-nextflow
+dependencies:
+- python=3.7
+- conda-forge::graphviz=2.40.1
+- bioconda::nextflow=19.07.0
+- conda-forge::pytest=5.1.2
