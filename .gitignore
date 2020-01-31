@@ -1,0 +1,6 @@
+.nextflow.log*
+slurm*
+.nextflow/
+work/
+results/
+data/pipeline_info
