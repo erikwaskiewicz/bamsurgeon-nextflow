@@ -41,7 +41,8 @@ RUN conda install --yes --freeze-installed \
  && find /opt/conda/ -follow -type f -name '*.pyc' -delete \
  && find /opt/conda/ -follow -type f -name '*.js.map' -delete
 
-# Download and setup bamsurgeon
+# Download and setup bamsurgeon - last Python2 commit
 RUN git clone https://github.com/adamewing/bamsurgeon.git \
  && cd bamsurgeon \
+ && git checkout 198986f4627509a163a42c7320c703edaac15d40 \
  && python setup.py install
