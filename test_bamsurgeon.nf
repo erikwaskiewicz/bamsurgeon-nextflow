@@ -1,10 +1,11 @@
 """
-Runs BAMSurgeons built in test scripts
+Runs BAMSurgeon's built in test scripts
 
 Usage: nextflow run test_bamsurgeon.nf -profile docker_conf
 
-The tests contain relative paths so must cd into test directory in each process
-
+The tests contain relative paths so must cd into test directory in each process.
+Many processes require the path to the picard.jar file installed in /opt/conda, 
+this is set in each process.
 """
 
 process test_picard_installation {
@@ -13,6 +14,10 @@ process test_picard_installation {
      *  picard.jar file in /opt/conda/share
      */
     container "erikwaskiewicz/bamsurgeon:latest"
+
+    output:
+        val true into installed_correctly
+
     script:
         """
         export PICARDJAR=\$(find /opt/conda -name picard.jar)
@@ -43,6 +48,10 @@ process test_snv {
      *  
      */
     container "erikwaskiewicz/bamsurgeon:latest"
+
+    input:
+        val flag from installed_correctly
+
     script:
         """
         export PICARDJAR=\$(find /opt/conda -name picard.jar)
@@ -58,6 +67,10 @@ process test_snv_alt {
      *  
      */
     container "erikwaskiewicz/bamsurgeon:latest"
+
+    input:
+        val flag from installed_correctly
+
     script:
         """
         cd /var/app/bamsurgeon/test
@@ -165,6 +178,10 @@ process test_snv_minmutreads {
      *  
      */
     container "erikwaskiewicz/bamsurgeon:latest"
+
+    input:
+        val flag from installed_correctly
+
     script:
         """
         cd /var/app/bamsurgeon/test
@@ -196,6 +213,10 @@ process test_snv_ont {
      *  
      */
     container "erikwaskiewicz/bamsurgeon:latest"
+
+    input:
+        val flag from installed_correctly
+
     script:
         """
         export PICARDJAR=\$(find /opt/conda -name picard.jar)
@@ -211,6 +232,10 @@ process test_snv_skipmerge {
      *  
      */
     container "erikwaskiewicz/bamsurgeon:latest"
+
+    input:
+        val flag from installed_correctly
+
     script:
         """
         cd /var/app/bamsurgeon/test
