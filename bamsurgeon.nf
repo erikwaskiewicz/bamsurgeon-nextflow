@@ -1,18 +1,18 @@
 """
 
 
-Usage: nextflow run generate-in-silico-data.nf
+Usage: nextflow run bamsurgeon.nf
 
 """
 
 help_message = """
 ===============================================================================
 
-generate-in-silico-data.nf  -  v${params.version}
+bamsurgeon.nf  -  v${params.version}
 
 ===============================================================================
 
-Usage: nextflow generate-in-silico-data.nf -profile test
+Usage: nextflow bamsurgeon.nf -profile test
 
 Required parameters:
   --bam_file            Absolute path to BAM file
@@ -117,15 +117,15 @@ process make_snvs {
     script:
         """
         addsnv.py \
+            --varfile $var \
             --bamfile $bam \
             --reference /var/app/bamsurgeon/test_data/Homo_sapiens_chr22_assembly19.fasta \
-            --varfile $var \
-            --numsnvs 5 \
             --outbam ${bam.name.replace('.bam', '_mut.bam')} \
+            --numsnvs 5 \
+            --cnvfile /var/app/bamsurgeon/test_data/test_cnvlist.txt.gz \
+            --picardjar /opt/conda/share/picard-2.22.3-0/picard.jar \
             --aligner mem \
-            --picardjar /opt/conda/share/picard-2.21.7-0/picard.jar \
-            --cnvfile /var/app/bamsurgeon/test_data/test_cnvlist.txt.gz #\
-            #--seed 1234
+            --seed 1234
         """
 }
 
