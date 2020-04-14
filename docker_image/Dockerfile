@@ -23,14 +23,15 @@ RUN apt-get update \
         procps \
  && rm -rf /var/lib/apt/lists/*
 
-# Update conda, make the conda environment, clean unnecessary files afterwards
+# Update conda, make the conda environment, clean unnecessary files
+# afterwards
 RUN conda install --yes --freeze-installed \
         python=2.7 \
         bioconda::bcftools \
         bioconda::bwa \
         bioconda::exonerate \
         bioconda::htslib \
-        bioconda::picard \
+        bioconda::picard=2.22.3-0 \
         bioconda::pysam \
         bioconda::samtools \
         bioconda::velvet \
@@ -41,7 +42,8 @@ RUN conda install --yes --freeze-installed \
  && find /opt/conda/ -follow -type f -name '*.pyc' -delete \
  && find /opt/conda/ -follow -type f -name '*.js.map' -delete
 
-# Download and setup bamsurgeon - last Python2 commit
+# Download and setup BAMSurgeon - change to last commit before it was
+# switched to Python3
 RUN git clone https://github.com/adamewing/bamsurgeon.git \
  && cd bamsurgeon \
  && git checkout 198986f4627509a163a42c7320c703edaac15d40 \
