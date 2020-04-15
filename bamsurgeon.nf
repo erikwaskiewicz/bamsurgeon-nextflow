@@ -52,6 +52,7 @@ else { params.bam_index = false }
 bam_file  = file(params.bam_file)
 snv_file  = file(params.snv_file)
 ref_fasta = file(params.ref_file)
+ref_index = file(params.ref_index)
 cnv_list  = file(params.cnv_list)
 
 // Create a summary for the logfile
@@ -105,27 +106,25 @@ process make_snvs {
     publishDir "$params.outdir", mode: "copy"
 
     input:
+        file(var) from snv_file
         file(bam) from bam_file
         file(bai) from bai_file
-        file(ref) from ref_fasta
-        file(var) from snv_file
-        file(cnv) from cnv_list
+        //file(ref_file) from ref_fasta       These are currently hard coded below
+        //file(ref_index) from ref_index      it cant find the .fai file when passed in 
 
     output:
         file("${bam.name.replace('.bam', '_mut.bam')}") into bam_out
 
     script:
         """
+        export PICARDJAR=\$(find /opt/conda -name picard.jar)
         addsnv.py \
             --varfile $var \
             --bamfile $bam \
             --reference /var/app/bamsurgeon/test_data/Homo_sapiens_chr22_assembly19.fasta \
             --outbam ${bam.name.replace('.bam', '_mut.bam')} \
-            --numsnvs 5 \
-            --cnvfile /var/app/bamsurgeon/test_data/test_cnvlist.txt.gz \
-            --picardjar /opt/conda/share/picard-2.22.3-0/picard.jar \
-            --aligner mem \
-            --seed 1234
+            --picardjar \$PICARDJAR \
+            --aligner mem
         """
 }
 
