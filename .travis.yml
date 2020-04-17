@@ -1,0 +1,28 @@
+# git repo is cloned automatically
+# base image is a minimal linux environment
+language: minimal
+
+
+services:
+  - docker 
+
+
+install:
+  # install miniconda and install packages into base environment
+  - |
+    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+    bash ~/miniconda.sh -b -p $HOME/miniconda
+    source "$HOME/miniconda/etc/profile.d/conda.sh"
+    conda config --set always_yes yes
+    conda update -q conda
+    conda install python=3.7 bioconda::nextflow=19.07.0 conda-forge::pytest=5.1.2
+
+
+before_script:
+  # activate the conda environment  before each script
+  - conda activate base && cd /home/travis/build/erikwaskiewicz/bamsurgeon-nextflow
+
+
+script:  
+  # run the nextflow pipeline with the test data
+  - nextflow run test_bamsurgeon.nf -profile docker_conf
