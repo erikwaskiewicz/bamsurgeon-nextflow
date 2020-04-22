@@ -112,7 +112,7 @@ process make_snvs {
     /* 
      *  Add the SNVs in the supplied SNV file to the reference BAM file
      */
-    container "erikwaskiewicz/bamsurgeon:latest"
+    container "erikwaskiewicz/bamsurgeon:v0.1"
     publishDir "$params.outdir", mode: "copy"
     input:
         file(var) from snv_file

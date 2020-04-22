@@ -14,7 +14,7 @@ process test_picard_installation {
      *  Checks that Picard is installed correctly by looking for the 
      *  picard.jar file in /opt/conda/share
      */
-    container "erikwaskiewicz/bamsurgeon:latest"
+    container "erikwaskiewicz/bamsurgeon:v0.1"
     output:
         val true into installed_correctly
     script:
@@ -46,7 +46,7 @@ process test_snv {
     /* 
      *  Tests that the add_snvs.py command works
      */
-    container "erikwaskiewicz/bamsurgeon:latest"
+    container "erikwaskiewicz/bamsurgeon:v0.1"
     input:
         val flag from installed_correctly
     script:
@@ -63,7 +63,7 @@ process test_snv_alt {
     /* 
      *  Tests that the add_snvs.py command works
      */
-    container "erikwaskiewicz/bamsurgeon:latest"
+    container "erikwaskiewicz/bamsurgeon:v0.1"
     input:
         val flag from installed_correctly
     script:
@@ -78,7 +78,7 @@ process test_snv_environ {
     /* 
      *  Tests that add_snvs.py works with the BAMSURGEON_PICARD_JAR env variable set
      */
-    container "erikwaskiewicz/bamsurgeon:latest"
+    container "erikwaskiewicz/bamsurgeon:v0.1"
     input:
         val flag from installed_correctly
     script:
@@ -95,7 +95,7 @@ process test_snv_minmutreads {
     /* 
      *  Tests that add_snvs.py works with the optional minmutreads input
      */
-    container "erikwaskiewicz/bamsurgeon:latest"
+    container "erikwaskiewicz/bamsurgeon:v0.1"
     input:
         val flag from installed_correctly
     script:
@@ -110,7 +110,7 @@ process test_snv_ont {
     /* 
      *  Tests add_snvs.py with mimimap2
      */
-    container "erikwaskiewicz/bamsurgeon:latest"
+    container "erikwaskiewicz/bamsurgeon:v0.1"
     input:
         val flag from installed_correctly
     script:
@@ -127,7 +127,7 @@ process test_snv_skipmerge {
     /* 
      *  Tests that add_snvs.py works with the optional skipmerge flag
      */
-    container "erikwaskiewicz/bamsurgeon:latest"
+    container "erikwaskiewicz/bamsurgeon:v0.1"
     input:
         val flag from installed_correctly
     script:
