@@ -24,5 +24,7 @@ before_script:
 
 
 script:  
-  # run the nextflow pipeline with the test data
+  # run the BAMSurgeon unit tests
   - nextflow run test_bamsurgeon.nf -profile docker_conf
+  # run the nextflow pipeline with the test data
+  - nextflow run bamsurgeon.nf -profile docker_conf,test
